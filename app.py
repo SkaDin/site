@@ -2,7 +2,7 @@ import os
 import random
 from datetime import datetime
 
-from flask import current_app, Flask, redirect, render_template, url_for, request
+from flask import Flask, redirect, render_template, url_for, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import FlaskForm
 from wtforms import FileField, StringField, SubmitField, TextAreaField
@@ -70,14 +70,16 @@ def show_index():
     return render_template('index.html', images=getting_a_photo(), post=post)
 
 
+@app.route('/post/<int:id>')
+def post_view(id: int): # noqa
+    post = Posts.query.get(id)
+    return render_template('index.html', post=post)
+
+
 @app.route('/add', methods=['GET', 'POST'])
 def add_posts():
     form = PostForm()
     if form.validate_on_submit():
-        post = Posts(
-            title=form.title.data,
-            text=form.text.data,
-        )
         image = form.image.data
         filename = secure_filename(str(image))
         image_file = request.files['image']
@@ -87,10 +89,15 @@ def add_posts():
                 filename
             )
         )
+        post = Posts(
+            title=form.title.data,
+            image=filename,
+            text=form.text.data,
+        )
         post.image = filename
         db.session.add(post)
         db.session.commit()
-        # return redirect(url_for('opinion_view', id=post.id))
+        return redirect(url_for('post_view'))
     return render_template('add_post.html', form=form)
 
 

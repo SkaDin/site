@@ -34,7 +34,7 @@
               {% endfor %}
             {% endif %}
           </p>
-          {{ form.submit(class="button px-5 py-3 btn") }}
+          {{ form.submit(class="button px-5 py-3 btn btn") }}
         </form>
           <p class="py-3 mb-3">
             {% with messages = get_flashed_messages(category_filter=["unique"]) %}
@@ -47,7 +47,7 @@
           </p>
       </div>
       <div class="col-12 col-lg-5">
-        <img class="img-fluid mx-auto d-block" src="{{ url_for('static', filename='img/girl.png') }}" alt="" />
+        <img class="img-fluid mx-auto d-block" src="{{ url_for('static', filename='img/girl.png') }}" alt="" draggable="false" />
       </div>
     </div>
   </section>
