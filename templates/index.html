@@ -1,4 +1,4 @@
-<div class="beautiful-div">
+
     {% extends "base.html" %}
     {% block title %}Тату # {{ post.id }}{%endblock %}
     {% block content %}
@@ -8,7 +8,8 @@
     <main>
       <section class="container my-5">
           <div class="beautiful-div">
-            <div class="row">
+            <div class="beautiful-div">
+              <div class="row">
                 <div class="div-block ">
                     <h2>{{ post.title }}</h2>
                     <img src="{{ url_for('static', filename='people_photo/' + post.image) }}" alt="User Image" class="centered-image" draggable="false" onclick="openModal('{{ url_for('static', filename='people_photo/' + post.image) }}')" />
@@ -21,10 +22,10 @@
                 </div>
                 <div class="col-12 col-lg-5">
             <img class="img-fluid mx-auto d-block" src="{{ url_for('static', filename='img/girl.png') }}" alt="" draggable="false" />
-          </div>
+               </div>
+              </div>
             </div>
           </div>
       </section>
     </main>
     {% endblock %}
-</div>

@@ -1,6 +1,6 @@
 import os
 import random
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from flask import Flask, redirect, render_template, url_for, request
 from flask_sqlalchemy import SQLAlchemy
@@ -26,10 +26,10 @@ db = SQLAlchemy(app)
 
 class Posts(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(124), nullable=False)
+    title = db.Column(db.String(124), unique=True, nullable=False)
     image = db.Column(db.String(128))
     text = db.Column(db.Text, unique=True)
-    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow() + timedelta(hours=3))
 
 
 class PostForm(FlaskForm):
@@ -53,6 +53,7 @@ class PostForm(FlaskForm):
 
 
 def getting_a_photo():
+    """Получение случайного фото."""
     files = os.listdir(app.config['UPLOAD_FOLDER'])
     images = [file for file in files]
     images = random.choice(images)
@@ -62,6 +63,7 @@ def getting_a_photo():
 
 @app.route('/')
 def show_index():
+    """Функция выводит случайный пост."""
     quantity = Posts.query.count()
     if not quantity:
         return 'Пока пусто'
@@ -72,12 +74,14 @@ def show_index():
 
 @app.route('/post/<int:id>')
 def post_view(id: int): # noqa
-    post = Posts.query.get(id)
+    """После создания поста, перенаправляет на этот пост."""
+    post = Posts.query.get_or_404(id)
     return render_template('index.html', post=post)
 
 
 @app.route('/add', methods=['GET', 'POST'])
 def add_posts():
+    """Функция создания нового поста."""
     form = PostForm()
     if form.validate_on_submit():
         image = form.image.data
@@ -97,7 +101,7 @@ def add_posts():
         post.image = filename
         db.session.add(post)
         db.session.commit()
-        return redirect(url_for('post_view'))
+        return redirect(url_for('post_view', id=post.id))
     return render_template('add_post.html', form=form)
 
 
