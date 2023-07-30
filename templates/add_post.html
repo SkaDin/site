@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %} Добавление нового мнения о фильме {% endblock %}
+{% block content %}
+<main>
+  <section class="container my-5">
+    <div class="row">
+      <h1>Добавить мнение о фильме</h1>
+      <div class="col-12 col-lg-7 my-5">
+        <form method="POST" novalidate enctype="multipart/form-data">
+          {{ form.csrf_token }}
+          {{ form.title(class="form-control form-control-lg py-3 mb-3", placeholder=form.title.label.text) }}
+          <p>
+            {% if form.title.errors %}
+              {% for error in form.title.errors %}
+                <span style="color: red">{{ error }}</span>
+              {% endfor %}
+            {% endif %}
+          </p>
+          <p></p>
+          {{ form.text(class="form-control form-control-lg py-3 mb-3", placeholder=form.text.label.text, rows="3", cols="40")}}
+          <p class="text-danger">
+            {% if form.text.errors %}
+              {% for error in form.text.errors %}
+                {{ error }}
+              {% endfor %}
+            {% endif %}
+          </p>
+
+           {{ form.image(class="form-control-file py-3 mb-3") }}
+          <p class="text-danger">
+            {% if form.image.errors %}
+              {% for error in form.image.errors %}
+                {{ error }}
+              {% endfor %}
+            {% endif %}
+          </p>
+          {{ form.submit(class="button px-5 py-3 btn") }}
+        </form>
+          <p class="py-3 mb-3">
+            {% with messages = get_flashed_messages(category_filter=["unique"]) %}
+              {% if messages %}
+                {% for message in messages %}
+                  {{ message }}
+                {% endfor %}
+              {% endif %}
+            {% endwith %}
+          </p>
+      </div>
+      <div class="col-12 col-lg-5">
+        <img class="img-fluid mx-auto d-block" src="{{ url_for('static', filename='img/girl.png') }}" alt="" />
+      </div>
+    </div>
+  </section>
+</main>
+{% endblock %}

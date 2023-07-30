@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Тату # {{ post.id }}{%endblock %}
+{% block content %}
+<main>
+  <section class="container my-5">
+    <div class="row">
+      <div class="col-12 col-lg-7 my-5">
+        <h1>{{ post.title }}</h1>
+        <img src="{{ images }}" alt="User Image" class="centered-image">
+        {{ post.text }}
+      </div>
+      <div class="col-12 col-lg-5">
+        <img class="img-fluid mx-auto d-block" src="{{ url_for('static', filename='img/girl.png') }}" alt="" />
+      </div>
+    </div>
+  </section>
+</main>
+{% endblock %}
