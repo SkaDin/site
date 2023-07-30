@@ -37,7 +37,7 @@
           {{ form.submit(class="button px-5 py-3 btn btn") }}
         </form>
           <p class="py-3 mb-3">
-            {% with messages = get_flashed_messages(category_filter=["unique"]) %}
+            {% with messages = get_flashed_messages() %}
               {% if messages %}
                 {% for message in messages %}
                   {{ message }}

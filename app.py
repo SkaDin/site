@@ -2,7 +2,7 @@ import os
 import random
 from datetime import datetime, timedelta
 
-from flask import Flask, redirect, render_template, url_for, request
+from flask import Flask, redirect, request, render_template, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import FlaskForm
 from wtforms import FileField, StringField, SubmitField, TextAreaField
@@ -26,9 +26,9 @@ db = SQLAlchemy(app)
 
 class Posts(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(124), unique=True, nullable=False)
+    title = db.Column(db.String(124), nullable=False)
     image = db.Column(db.String(128))
-    text = db.Column(db.Text, unique=True)
+    text = db.Column(db.Text, unique=True, nullable=False)
     timestamp = db.Column(db.DateTime, default=datetime.utcnow() + timedelta(hours=3))
 
 
@@ -84,7 +84,14 @@ def add_posts():
     """Функция создания нового поста."""
     form = PostForm()
     if form.validate_on_submit():
+        text = form.text.data
+        title = form.title.data
         image = form.image.data
+        if (Posts.query.filter_by(text=text).first() is not None
+                and Posts.query.filter_by(title=title) is not None):
+            flash(f'Проверьте поля:"{title}" и "{text}"'
+                  f' - они могут быть не уникальными!')
+            return render_template('add_post.html', form=form)
         filename = secure_filename(str(image))
         image_file = request.files['image']
         image_file.save(
