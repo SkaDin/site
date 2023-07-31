@@ -1,0 +1,1 @@
+IMAGES = set('jpg jpe jpeg png gif svg bmp'.split())
