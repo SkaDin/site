@@ -7,7 +7,7 @@
     </a>
       <div class="d-flex justify-content-end">
         <ul class="nav nav-pills">
-          <li class="nav-item pe-5">
+          <li class="nav-item">
             <a class="nav-link" href="{{ url_for('add_posts') }}">
               Добавить своё тату
             </a>
@@ -16,6 +16,30 @@
             <a class="nav-link" href="{{ url_for('show_index') }}">
               Показать случайное тату
             </a>
+          </li>
+          {% if current_user.is_anonymous %}
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('auth.login') }}">
+              Войти
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class ="nav-link" href="{{ url_for('auth.register') }}">
+              Зарегистрироваться
+            </a>
+          </li>
+          {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('auth.logout') }}">
+              Выйти
+            </a>
+          </li>
+          <li class="nav-item">
+            <div class="user">
+              <img src="{{ url_for('static', filename='people_photo/' + current_user.avatar) }}" class="avatar" alt="user-avatar">
+              <span class="username">{{ current_user.username }}</span>
+              {% endif %}
+            </div>
           </li>
         </ul>
       </div>

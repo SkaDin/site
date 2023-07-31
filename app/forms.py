@@ -1,9 +1,9 @@
 from flask_wtf import FlaskForm
+from flask_wtf.file import FileAllowed
 from wtforms import FileField, StringField, SubmitField, TextAreaField
 from wtforms.validators import DataRequired, Length
-from flask_wtf.file import FileAllowed
 
-from app.constants import IMAGES
+from constants import IMAGES
 
 
 class PostForm(FlaskForm):

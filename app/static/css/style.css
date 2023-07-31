@@ -337,3 +337,14 @@ body {
   font-weight: bold;
   cursor: pointer;
 }
+
+.avatar {
+  width: 10px;
+  height: 10px;
+  border-radius: 10%;
+}
+
+.username {
+  font-weight: bold;
+  margin-left: 5px;
+}

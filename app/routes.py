@@ -2,9 +2,10 @@ import os
 import random
 
 from flask import flash, redirect, request, render_template, url_for
+from flask_login import login_required
 from werkzeug.utils import secure_filename
 
-from settings import Config
+from config import Config
 from app import app, db
 from app.forms import PostForm
 from app.models import Posts
@@ -42,6 +43,7 @@ def post_view(id: int): # noqa
 
 
 @app.route('/add', methods=['GET', 'POST'])
+@login_required
 def add_posts():
     """Функция создания нового поста."""
     form = PostForm()
