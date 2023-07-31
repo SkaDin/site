@@ -230,8 +230,13 @@ body {
 /* CSS для поля datetime */
 .div-block .datetime {
   font-size: 15px; /* Размер шрифта */
-  color: #F80000; /* Цвет текста */
+  color: #800000; /* Цвет текста */
   margin-top: 10px; /* Отступ сверху */
+}
+.user-block .user {
+    /* стили для блока юзера */
+    color: #1C1C1C;
+    font-size: 20px;
 }
 
 .beautiful-div .image-panel {
@@ -347,4 +352,10 @@ body {
 .username {
   font-weight: bold;
   margin-left: 5px;
+}
+
+.user {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 }

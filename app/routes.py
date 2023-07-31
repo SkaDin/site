@@ -4,11 +4,12 @@ import random
 from flask import flash, redirect, request, render_template, url_for
 from flask_login import login_required
 from werkzeug.utils import secure_filename
+from flask_login import current_user
 
 from config import Config
 from app import app, db
 from app.forms import PostForm
-from app.models import Posts
+from app.models import Post
 
 
 def getting_a_photo():
@@ -23,11 +24,11 @@ def getting_a_photo():
 @app.route('/')
 def show_index():
     """Функция выводит случайный пост."""
-    quantity = Posts.query.count()
+    quantity = Post.query.count()
     if not quantity:
         return 'FEE'
     offset_value = random.randrange(quantity)
-    post = Posts.query.offset(offset_value).first()
+    post = Post.query.offset(offset_value).first()
     return render_template(
         'index.html',
         images=getting_a_photo(),
@@ -38,7 +39,7 @@ def show_index():
 @app.route('/post/<int:id>')
 def post_view(id: int): # noqa
     """После создания поста, перенаправляет на этот пост."""
-    post = Posts.query.get_or_404(id)
+    post = Post.query.get_or_404(id)
     return render_template('index.html', post=post)
 
 
@@ -51,8 +52,8 @@ def add_posts():
         text = form.text.data
         title = form.title.data
         image = form.image.data
-        if (Posts.query.filter_by(text=text).first() is not None
-                and Posts.query.filter_by(title=title).first() is not None):
+        if (Post.query.filter_by(text=text).first() is not None
+                and Post.query.filter_by(title=title).first() is not None):
             flash(f'Проверьте поля:"{title}" и "{text}"'
                   f' - они могут быть не уникальными!')
             return render_template('add_post.html', form=form)
@@ -64,10 +65,11 @@ def add_posts():
                 filename
             )
         )
-        post = Posts(
+        post = Post(
             title=form.title.data,
             image=filename,
             text=form.text.data,
+            user_id=current_user,
         )
         post.image = filename
         db.session.add(post)

@@ -1,5 +1,6 @@
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
+from sqlalchemy.orm import relationship
 
 from app import db, login
 
@@ -10,6 +11,7 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(120), index=True, unique=True)
     password = db.Column(db.String(128))
     avatar = db.Column(db.String(128), nullable=True)
+    post = relationship('Post', cascade='delete')
 
     def __repr__(self):
         return '<User {}>'.format(self.username)

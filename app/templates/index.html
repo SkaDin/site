@@ -16,8 +16,13 @@
                             <span class="close" onclick="closeModal()">&times;</span>
                             <img class="modal-content" id="enlarged-photo">
                         </div>
-                        <p>{{ post.text }}</p>
-                        <p class="datetime">{{ post.timestamp.strftime("%Y/%m/%d %H:%M:%S") }}</p>
+                        <div class="user-block">
+                            <div class="user">
+                                Пользователь: {{ post.user.username }}
+                            </div>
+                            <p>{{ post.text }}</p>
+                            <p class="datetime">{{ post.timestamp.strftime("%Y/%m/%d %H:%M:%S") }}</p>
+                        </div>
                     </div>
                     <div class="col-12 col-lg-5">
                         <img class="img-fluid mx-auto d-block" src="{{ url_for('static', filename='img/girl.png') }}" alt="" draggable="false" />

@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 from app import db
 
 
-class Posts(db.Model):
+class Post(db.Model):
     """Модель постов."""
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(124), nullable=False)
@@ -13,4 +13,5 @@ class Posts(db.Model):
         db.DateTime,
         default=datetime.utcnow() + timedelta(hours=3)
     )
-    added_by = db.Column(db.String(64))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user = db.relationship('User', backref='posts')
