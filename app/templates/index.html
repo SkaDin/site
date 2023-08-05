@@ -17,11 +17,18 @@
                             <img class="modal-content" id="enlarged-photo">
                         </div>
                         <div class="user-block">
-                            <div class="user">
-                                Пользователь: {{ post.user.username }}
+                            <div class="user-block">
+                                <div class="user">
+                                    Пользователь: {{ post.user.username }}
+                                    {% if post.user.avatar == 'FileStorage__application_octet-stream' %}
+                                    <img class="avatar" src="{{ url_for('static', filename='img/avatar_default.png') }}" alt="user-avatar" style="width: 40px; height: 40px; border-radius: 25%; border: 1px solid black; margin-right: 0px;" draggable="false">
+                                    {% elif post.user.avatar %}
+                                    <img class="avatar" src="{{ url_for('static', filename='people_photo/' + post.user.avatar) }}" alt="user-avatar" draggable="false" style="width: 40px; height: 40px; border-radius: 50%; border: 1px solid black; margin-right: 0px;" >
+                                    {% endif %}
+                                </div>
+                                <p>{{ post.text }}</p>
+                                <p class="datetime">{{ post.timestamp.strftime("%Y/%m/%d %H:%M:%S") }}</p>
                             </div>
-                            <p>{{ post.text }}</p>
-                            <p class="datetime">{{ post.timestamp.strftime("%Y/%m/%d %H:%M:%S") }}</p>
                         </div>
                     </div>
                     <div class="col-12 col-lg-5">

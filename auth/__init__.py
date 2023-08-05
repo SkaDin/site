@@ -4,7 +4,7 @@ bp = Blueprint(
     'auth',
     __name__,
     url_prefix='/auth',
-    static_folder='static',  # Пока тест
+    static_folder='static',
     template_folder='templates'
 )
 

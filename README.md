@@ -1,2 +1,1 @@
-# site
-My site for tattoo
+ÿþ

@@ -1,7 +1,11 @@
 import os
 import random
 
-from flask import flash, redirect, request, render_template, url_for
+from flask import (flash,
+                   redirect,
+                   request,
+                   render_template,
+                   url_for)
 from flask_login import login_required
 from werkzeug.utils import secure_filename
 from flask_login import current_user
@@ -69,10 +73,15 @@ def add_posts():
             title=form.title.data,
             image=filename,
             text=form.text.data,
-            user_id=current_user,
+            user_id=current_user.id,
         )
         post.image = filename
         db.session.add(post)
         db.session.commit()
         return redirect(url_for('post_view', id=post.id))
     return render_template('add_post.html', form=form)
+
+
+@app.route('/all_posts', methods=['GET', 'POST'])
+def all_posts():
+    pass
