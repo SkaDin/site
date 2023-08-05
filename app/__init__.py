@@ -3,6 +3,7 @@ from flask_bootstrap import Bootstrap
 from flask_login import LoginManager
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
+
 from config import Config
 from flask_admin import Admin
 
@@ -26,5 +27,9 @@ app.register_blueprint(errors_bp)
 from auth import bp as auth_bp
 
 app.register_blueprint(auth_bp)
+
+from admin import bp as admin_bp
+
+app.register_blueprint(admin_bp)
 
 from app import routes

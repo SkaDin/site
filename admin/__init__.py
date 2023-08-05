@@ -1,12 +1,11 @@
-from flask_admin.contrib.sqla import ModelView
-from app import app, db
+from flask import Blueprint
 
-from app.models import Post
-from auth.models import User
-from app import Admin
+bp = Blueprint(
+    'administrator',
+    __name__,
+    url_prefix='/admin',
+    static_folder='static',
+    template_folder='templates'
+)
 
-
-admin = Admin(app, name='myblog', template_mode='bootstrap3')
-
-admin.add_views(ModelView(User, db.session))
-admin.add_views(ModelView(Post, db.session))
+from admin import routes, models

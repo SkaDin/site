@@ -6,5 +6,5 @@ class Config(object):
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SECRET_KEY = os.getenv('SECRET_KEY')
     PEOPLE_FOLDER = os.path.join('app/static', 'people_photo')
-    FLASK_ADMIN_SWATCH = 'cerulean'
+    FLASK_ADMIN_SWATCH = 'superhero'
 
