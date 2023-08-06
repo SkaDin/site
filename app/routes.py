@@ -14,15 +14,7 @@ from config import Config
 from app import app, db
 from app.forms import PostForm
 from app.models import Post
-
-
-def getting_a_photo():
-    """Получение случайного фото."""
-    files = os.listdir(Config.PEOPLE_FOLDER)
-    images = [file for file in files]
-    images = random.choice(images)
-    image_final = os.path.join(Config.PEOPLE_FOLDER, images)
-    return image_final
+from utils import getting_a_photo
 
 
 @app.route('/')
@@ -58,7 +50,7 @@ def add_posts():
         image = form.image.data
         if (Post.query.filter_by(text=text).first() is not None
                 and Post.query.filter_by(title=title).first() is not None):
-            flash(f'Проверьте поля:"{title}" и "{text}"'
+            flash(f'Проверьте поля с названием и описанием'
                   f' - они могут быть не уникальными!')
             return render_template('add_post.html', form=form)
         filename = secure_filename(str(image))
@@ -84,4 +76,5 @@ def add_posts():
 
 @app.route('/all_posts', methods=['GET', 'POST'])
 def all_posts():
+    """Функция для вывода постов."""
     pass

@@ -1,4 +1,5 @@
 from flask_login import UserMixin
+from flask_security import RoleMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy.orm import relationship
 
@@ -6,6 +7,7 @@ from app import db, login
 
 
 class User(UserMixin, db.Model):
+    """Модель пользователей."""
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), index=True, unique=True)
     email = db.Column(db.String(120), index=True, unique=True)

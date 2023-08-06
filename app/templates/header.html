@@ -37,9 +37,9 @@
           <li class="nav-item">
             <div class="user">
               {% if current_user.avatar == 'FileStorage__application_octet-stream' %}
-              <img class="avatar" src="{{ url_for('static', filename='img/avatar_default.png') }}" alt="user-avatar" style="width: 40px; height: 40px; border-radius: 25%; border: 1px solid black; margin-right: 0px;" draggable="false">
+              <img class="avatar" src="{{ url_for('static', filename='img/avatar_default.png') }}" alt="user-avatar" style="width: 40px; height: 40px; border-radius: 25%;" draggable="false">
               {% else %}
-              <img class="avatar" src="{{ url_for('static', filename='people_photo/' + current_user.avatar) }}" alt="user-avatar" draggable="false" style="width: 40px; height: 40px; border-radius: 50%; border: 1px solid black; margin-right: 0px;" >
+              <img class="avatar" src="{{ url_for('static', filename='people_photo/' + current_user.avatar) }}" alt="user-avatar" draggable="false" style="width: 40px; height: 40px; border-radius: 50%; border: 3px solid black; margin-right: 0px;" >
               {% endif %}
               <span class="username" style="width: 40px; height: 40px; margin-right: 0px;">
                 {{ current_user.username }}
