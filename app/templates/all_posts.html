@@ -2,6 +2,12 @@
 {% block title %}Все тату{%endblock %}
 {% block content %}
 <script src="{{ url_for('static', filename='js/func.for.stat.js') }}"></script>
+<style>
+    .datetime {
+        color: #6A5ACD;
+        font-size: 16px;
+    }
+</style>
 <div class="container">
     <div class="row">
         {% for post in posts %}
@@ -19,10 +25,16 @@
                             {{ post.user.username }}
                         </a>
                         {% if post.user.avatar == 'FileStorage__application_octet-stream' %}
-                        <img class="avatar" src="{{ url_for('static', filename='img/avatar_default.png') }}" alt="user-avatar" style="width: 40px; height: 40px; border-radius: 25%; border: 1px solid black; margin-right: 0px;" draggable="false">
+                        <img class="avatar" src="{{ url_for('static', filename='img/avatar_default.png') }}" alt="user-avatar" style="width: 40px; height: 40px; margin-right: 0px;" draggable="false">
                         {% elif post.user.avatar %}
                         <img class="avatar" src="{{ url_for('static', filename='people_photo/' + post.user.avatar) }}" alt="user-avatar" draggable="false" style="width: 40px; height: 40px; border-radius: 50%; border: 3px solid black; margin-right: 0px;" >
                         {% endif %}
+                        <div class="user-block">
+                            <div class="user-block">
+                                <p style="overflow-wrap: break-word;">{{ post.text }}</p>
+                                <p class="datetime">{{ post.timestamp.strftime("%H:%M:%S %d/%m/%Y") }}</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

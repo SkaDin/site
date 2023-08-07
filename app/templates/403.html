@@ -1,20 +1,20 @@
-{% extends 'base.html' %} 
-{% block title %}404. Если тут что-то было, теперь этого тут нет.{% endblock %}
+{% extends 'base.html' %}
+{% block title %}403. Доступ к этой части сайта ограничен.{% endblock %}
 {% block content %}
 <main>
   <section class="container my-5">
     <div class="row">
       <div class="col-12 col-lg-7 my-5">
         <h1 class="mb-5">Ты не пройдёшь!</h1>
-        <p>Если тут что-то было, то теперь этого тут нет.</p>
+        <p>Бегите, глупцы.</p>
         <p>
           <a href="{{ url_for('show_index') }}">Вернуться на главную</a>
         </p>
       </div>
       <div class="col-12 col-lg-5">
-        <img class="img-fluid mx-auto d-block" src="{{ url_for('static', filename='img/404.png') }}" alt="" draggable="false" />
+        <img class="img-fluid mx-auto d-block" src="{{ url_for('static', filename='img/forbidden.png') }}" alt="" draggable="false" />
       </div>
     </div>
   </section>
 </main>
-{% endblock %} 
+{% endblock %}

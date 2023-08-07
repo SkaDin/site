@@ -5,7 +5,7 @@ from flask import (flash,
                    redirect,
                    request,
                    render_template,
-                   url_for)
+                   url_for, abort)
 from flask_login import login_required
 from werkzeug.utils import secure_filename
 from flask_login import current_user
@@ -24,7 +24,7 @@ def show_index():
     """Функция выводит случайный пост."""
     quantity = Post.query.count()
     if not quantity:
-        return 'FEE'
+        abort(404)
     offset_value = random.randrange(quantity)
     post = Post.query.offset(offset_value).first()
     return render_template(

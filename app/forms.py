@@ -15,7 +15,8 @@ class PostForm(FlaskForm):
     )
     text = TextAreaField(
         'Всё что хочется рассказать',
-        validators=[DataRequired(message='Поле обязательное!')]
+        validators=[DataRequired(message='Поле обязательное!'),
+                    Length(1, 128)]
     )
     image = FileField(
         'Фото',

@@ -15,6 +15,24 @@ class User(UserMixin, db.Model):
     avatar = db.Column(db.String(128), nullable=True)
     post = relationship('Post', cascade='delete')
 
+    @property
+    def is_authenticated(self):
+        return True
+
+    @property
+    def is_active(self):
+        return True
+
+    @property
+    def is_anonymous(self):
+        return False
+
+    def get_id(self):
+        return self.id
+
+    def __unicode__(self):
+        return self.username
+
     def __repr__(self):
         return '<User {}>'.format(self.username)
 

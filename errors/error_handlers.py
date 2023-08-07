@@ -15,3 +15,8 @@ def page_not_found(error): # noqa
 def internal_error(error): # noqa
     db.session.rollback()
     return render_template('500.html'), HTTPStatus.INTERNAL_SERVER_ERROR
+
+
+@bp.app_errorhandler(HTTPStatus.FORBIDDEN)
+def forbidden_error(error): # noqa
+    return render_template('403.html'), HTTPStatus.FORBIDDEN

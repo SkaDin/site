@@ -24,6 +24,10 @@ app.register_blueprint(errors_bp)
 
 from auth import bp as auth_bp
 
+from admin import bp as admin_bp
+
+app.register_blueprint(admin_bp)
+
 app.register_blueprint(auth_bp)
 
 from app import routes
