@@ -77,4 +77,19 @@ def add_posts():
 @app.route('/all_posts', methods=['GET', 'POST'])
 def all_posts():
     """Функция для вывода постов."""
-    pass
+    page = request.args.get('page', 1, type=int)
+    posts = Post.query.paginate(page=page, per_page=12)
+    return render_template('all_posts.html', posts=posts)
+
+
+@app.route('/user_posts/<int:user_id>', methods=['GET', 'POST'])
+def users_posts(user_id: int): # noqa
+    """Переводит на страницу юзера."""
+    page = request.args.get('page', 1, type=int)
+    posts = Post.query.filter_by(
+        user_id=user_id
+    ).paginate(page=page, per_page=12)
+    return render_template(
+        'user_posts.html',
+        posts=posts
+    )

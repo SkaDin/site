@@ -7,33 +7,34 @@
 <main>
     <section class="container my-5">
         <div class="beautiful-div">
-            <div class="beautiful-div">
-                <div class="row">
-                    <div class="div-block ">
-                        <h2>{{ post.title }}</h2>
-                        <img src="{{ url_for('static', filename='people_photo/' + post.image) }}" alt="User Image" class="centered-image" draggable="false" onclick="openModal('{{ url_for('static', filename='people_photo/' + post.image) }}')" />
-                        <div id="modal" class="modal">
-                            <span class="close" onclick="closeModal()">&times;</span>
-                            <img class="modal-content" id="enlarged-photo">
-                        </div>
+            <div class="row">
+                <div class="div-block ">
+                    <h2>{{ post.title }}</h2>
+                    <img src="{{ url_for('static', filename='people_photo/' + post.image) }}" alt="User Image" class="centered-image" draggable="false" onclick="openModal('{{ url_for('static', filename='people_photo/' + post.image) }}')" />
+                    <div id="modal" class="modal">
+                        <span class="close" onclick="closeModal()">&times;</span>
+                        <img class="modal-content" id="enlarged-photo">
+                    </div>
+                    <div class="user-block">
                         <div class="user-block">
-                            <div class="user-block">
-                                <div class="user">
-                                    Пользователь: {{ post.user.username }}
-                                    {% if post.user.avatar == 'FileStorage__application_octet-stream' %}
-                                    <img class="avatar" src="{{ url_for('static', filename='img/avatar_default.png') }}" alt="user-avatar" style="width: 40px; height: 40px; border-radius: 25%; border: 1px solid black; margin-right: 0px;" draggable="false">
-                                    {% elif post.user.avatar %}
-                                    <img class="avatar" src="{{ url_for('static', filename='people_photo/' + post.user.avatar) }}" alt="user-avatar" draggable="false" style="width: 40px; height: 40px; border-radius: 50%; border: 3px solid black; margin-right: 0px;" >
-                                    {% endif %}
-                                </div>
-                                <p>{{ post.text }}</p>
-                                <p class="datetime">{{ post.timestamp.strftime("%Y/%m/%d %H:%M:%S") }}</p>
+                            <div class="user">
+                                Пользователь:
+                                <a href="{{ url_for('users_posts', user_id=post.user.id) }}" style="text-decoration: none;">
+                                    {{ post.user.username }}
+                                </a>
+                                {% if post.user.avatar == 'FileStorage__application_octet-stream' %}
+                                <img class="avatar" src="{{ url_for('static', filename='img/avatar_default.png') }}" alt="user-avatar" style="width: 40px; height: 40px; border-radius: 25%; border: 1px solid black; margin-right: 0px;" draggable="false">
+                                {% elif post.user.avatar %}
+                                <img class="avatar" src="{{ url_for('static', filename='people_photo/' + post.user.avatar) }}" alt="user-avatar" draggable="false" style="width: 40px; height: 40px; border-radius: 50%; border: 3px solid black; margin-right: 0px;" >
+                                {% endif %}
                             </div>
+                            <p>{{ post.text }}</p>
+                            <p class="datetime">{{ post.timestamp.strftime("%Y/%m/%d %H:%M:%S") }}</p>
                         </div>
                     </div>
-                    <div class="col-12 col-lg-5">
-                        <img class="img-fluid mx-auto d-block" src="{{ url_for('static', filename='img/girl.png') }}" alt="" draggable="false" />
-                    </div>
+                </div>
+                <div class="col-12 col-lg-5">
+                    <img class="img-fluid mx-auto d-block" src="{{ url_for('static', filename='img/girl.png') }}" alt="" draggable="false" />
                 </div>
             </div>
         </div>

@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block title %}Все тату{%endblock %}
+{% block content %}
+<script src="{{ url_for('static', filename='js/func.for.stat.js') }}"></script>
+<div class="container">
+    <div class="row">
+        {% for post in posts %}
+            <div class="col-md-4">
+                <div class="user-block">
+                    <div class="user-block">
+                        <div class="user">
+                            <h4>{{ post.title }}</h4>
+                            <img src="{{ url_for('static', filename='people_photo/' + post.image) }}" alt="User Image" class="centered-image" draggable="false" onclick="openModal('{{ url_for('static', filename='people_photo/' + post.image) }}')" />
+                            {{ post.text }}
+                            <p class="datetime">{{ post.timestamp.strftime("%Y/%m/%d %H:%M:%S") }}</p>
+                            <div id="modal" class="modal">
+                                <span class="close" onclick="closeModal()">&times;</span>
+                                <img class="modal-content" id="enlarged-photo">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+<div class="pagination text-center py-5 justify-content-center">
+    {% if posts.has_prev %}
+        <a href="{{ url_for('all_posts', page=posts.prev_num) }}" class="page-link">← Предыдущая</a>
+    {% else %}
+        <span class="page-link disabled">← Предыдущая</span>
+    {% endif %}
+    {% for page_num in posts.iter_pages() %}
+    {% if page_num %}
+    {% if posts.page == page_num %}
+        <a href="{{ url_for('all_posts', page=page_num) }}" class="page-link"><strong>{{ page_num }}</strong></a>
+    {% else %}
+        <a href="{{ url_for('all_posts', page=page_num) }}" class="page-link">{{ page_num }}</a>
+    {% endif %}
+    {% else %}
+        <span class="page-link">...</span>
+    {% endif %}
+    {% endfor %}
+    {% if posts.has_next %}
+        <a href="{{ url_for('all_posts', page=posts.next_num) }}" class="page-link">Следующая →</a>
+    {% else %}
+        <span class="page-link disabled">Следующая →</span>
+    {% endif %}
+</div>
+{% endblock %}

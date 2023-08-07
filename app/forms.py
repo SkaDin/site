@@ -9,9 +9,9 @@ from constants import IMAGES
 class PostForm(FlaskForm):
     """Форма для создания поста."""
     title = StringField(
-        'Введите название тату',
+        'Введите название тату(17 символов)',
         validators=[DataRequired(message='Поле обязательное!'),
-                    Length(1, 124)]
+                    Length(1, 17)]
     )
     text = TextAreaField(
         'Всё что хочется рассказать',

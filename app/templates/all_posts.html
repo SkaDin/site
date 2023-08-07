@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block title %}Все тату{%endblock %}
+{% block content %}
+<script src="{{ url_for('static', filename='js/func.for.stat.js') }}"></script>
+<div class="container">
+    <div class="row">
+        {% for post in posts %}
+            <div class="col-md-4">
+                <h4>{{ post.title }}</h4>
+                <img src="{{ url_for('static', filename='people_photo/' + post.image) }}" alt="User Image" class="centered-image" draggable="false" onclick="openModal('{{ url_for('static', filename='people_photo/' + post.image) }}')" />
+                <div id="modal" class="modal">
+                    <span class="close" onclick="closeModal()">&times;</span>
+                    <img class="modal-content" id="enlarged-photo">
+                </div>
+                <div class="user-block">
+                    <div class="user">
+                        Пользователь:
+                        <a href="{{ url_for('users_posts', user_id=post.user.id) }}" style="text-decoration: none;">
+                            {{ post.user.username }}
+                        </a>
+                        {% if post.user.avatar == 'FileStorage__application_octet-stream' %}
+                        <img class="avatar" src="{{ url_for('static', filename='img/avatar_default.png') }}" alt="user-avatar" style="width: 40px; height: 40px; border-radius: 25%; border: 1px solid black; margin-right: 0px;" draggable="false">
+                        {% elif post.user.avatar %}
+                        <img class="avatar" src="{{ url_for('static', filename='people_photo/' + post.user.avatar) }}" alt="user-avatar" draggable="false" style="width: 40px; height: 40px; border-radius: 50%; border: 3px solid black; margin-right: 0px;" >
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+<div class="pagination text-center py-5 justify-content-center">
+    {% if posts.has_prev %}
+        <a href="{{ url_for('all_posts', page=posts.prev_num) }}" class="page-link">← Предыдущая</a>
+    {% else %}
+        <span class="page-link disabled">← Предыдущая</span>
+    {% endif %}
+    {% for page_num in posts.iter_pages() %}
+    {% if page_num %}
+    {% if posts.page == page_num %}
+        <a href="{{ url_for('all_posts', page=page_num) }}" class="page-link"><strong>{{ page_num }}</strong></a>
+    {% else %}
+        <a href="{{ url_for('all_posts', page=page_num) }}" class="page-link">{{ page_num }}</a>
+    {% endif %}
+    {% else %}
+        <span class="page-link">...</span>
+    {% endif %}
+    {% endfor %}
+    {% if posts.has_next %}
+        <a href="{{ url_for('all_posts', page=posts.next_num) }}" class="page-link">Следующая →</a>
+    {% else %}
+        <span class="page-link disabled">Следующая →</span>
+    {% endif %}
+</div>
+{% endblock %}

@@ -530,3 +530,14 @@ li{
 a{
   text-decoration:none;
 }
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.col-md-4 {
+  width: 32%;
+  margin-bottom: 20px;
+}
+
