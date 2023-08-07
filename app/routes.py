@@ -10,11 +10,13 @@ from flask_login import login_required
 from werkzeug.utils import secure_filename
 from flask_login import current_user
 
+from auth.models import User
 from config import Config
 from app import app, db
 from app.forms import PostForm
 from app.models import Post
 from utils import getting_a_photo
+from constants import ONE, TWELVE
 
 
 @app.route('/')
@@ -76,20 +78,24 @@ def add_posts():
 
 @app.route('/all_posts', methods=['GET', 'POST'])
 def all_posts():
-    """Функция для вывода постов."""
-    page = request.args.get('page', 1, type=int)
-    posts = Post.query.paginate(page=page, per_page=12)
+    """Функция для вывода всех постов."""
+    # Пагинация для постов
+    page = request.args.get('page', ONE, type=int)
+    posts = Post.query.paginate(page=page, per_page=TWELVE)
     return render_template('all_posts.html', posts=posts)
 
 
 @app.route('/user_posts/<int:user_id>', methods=['GET', 'POST'])
+@login_required
 def users_posts(user_id: int): # noqa
     """Переводит на страницу юзера."""
-    page = request.args.get('page', 1, type=int)
+    page = request.args.get('page', ONE, type=int)
+    selected_user = User.query.get_or_404(user_id)
     posts = Post.query.filter_by(
         user_id=user_id
-    ).paginate(page=page, per_page=12)
+    ).paginate(page=page, per_page=TWELVE)
     return render_template(
         'user_posts.html',
-        posts=posts
+        posts=posts,
+        selected_user=selected_user
     )
