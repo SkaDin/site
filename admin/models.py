@@ -4,6 +4,7 @@ import flask_login as login
 from flask_admin import helpers, Admin
 from flask_admin import expose
 from flask_admin.contrib import sqla
+from flask_login import current_user
 from werkzeug.security import generate_password_hash
 
 from admin.forms import RegistrationForm, LoginForm
@@ -11,6 +12,7 @@ from app import db, app
 from app.models import Post
 from auth.models import User
 from config import Config
+from constants import FORBIDDEN
 
 
 class MyModelView(sqla.ModelView):
@@ -23,6 +25,9 @@ class MyAdminIndexView(admin.AdminIndexView):
 
     @expose('/')
     def index(self):
+        # Запроещаем анониму заходить в админ-панель.
+        if current_user.is_anonymous():
+            abort(FORBIDDEN)
         if not login.current_user.is_authenticated:
             return redirect(url_for('.login_view'))
         if (login.current_user.is_authenticated and
