@@ -1,6 +1,9 @@
+import csv
 import os
 import random
+from datetime import datetime
 
+import click
 from flask import (flash,
                    redirect,
                    request,
@@ -16,7 +19,39 @@ from app import app, db
 from app.forms import PostForm
 from app.models import Post
 from utils import getting_a_photo
-from constants import ONE, TWELVE
+from constants import ONE, TWELVE, INTERNAL_SERVER_ERROR
+
+
+# Команда добавлена сюда а не в другую директорию
+# по причине того,
+# что Flask не видит команду из другой дирректории.
+@app.cli.command('load_test_data')
+def load_test_data():
+    """
+    Создание тестовых данных.
+    """
+    db.create_all()
+    with open('create_user.csv', encoding='utf-8') as file:
+        reader = csv.DictReader(file)
+        for row in reader:
+            user = User(**row) # noqa
+            db.session.add(user)
+            db.session.commit()
+
+    with open('data_for_start.csv', encoding='utf-8') as f:
+        readers = csv.DictReader(f)
+        for other_row in readers:
+            # Для обхода ошибки вытягиваем из csv-файла значение timestamp
+            # и делаем его форматом datetime.
+            timestamp = datetime.strptime(
+                other_row['timestamp'], # noqa
+                '%Y-%m-%d%H:%M:%S.%f'
+            )
+            other_row['timestamp'] = timestamp # noqa
+            post = Post(**other_row) # noqa
+            db.session.add(post)
+            db.session.commit()
+    click.echo('Добавлены тестовые данные!')
 
 
 @app.route('/')
@@ -24,7 +59,7 @@ def show_index():
     """Функция выводит случайный пост."""
     quantity = Post.query.count()
     if not quantity:
-        abort(404)
+        abort(INTERNAL_SERVER_ERROR)
     offset_value = random.randrange(quantity)
     post = Post.query.offset(offset_value).first()
     return render_template(

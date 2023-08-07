@@ -11,4 +11,3 @@ def getting_a_photo():
     images = random.choice(images)
     image_final = os.path.join(Config.PEOPLE_FOLDER, images)
     return image_final
-

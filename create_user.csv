@@ -1,0 +1,2 @@
+id,username,email,password,avatar
+1,test_user,my_email@example.com,test_user,FileStorage__application_octet-stream

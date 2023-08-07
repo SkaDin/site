@@ -1,10 +1,10 @@
 import flask_login as login
+from werkzeug.security import check_password_hash
+
 from wtforms import Form, StringField, PasswordField
 from wtforms.validators import InputRequired, ValidationError
 
-from werkzeug.security import generate_password_hash, check_password_hash
-
-from app import db, app
+from app import app, db
 from auth.models import User
 from constants import NULL
 
@@ -13,7 +13,7 @@ class LoginForm(Form):
     login = StringField(validators=[InputRequired()])
     password = PasswordField(validators=[InputRequired()])
 
-    def validate_login(self, field):
+    def validate_login(self, field): # noqa
         user = self.get_user()
         if user is None:
             raise ValidationError('Invalid user.')
@@ -29,7 +29,7 @@ class RegistrationForm(Form):
     email = StringField()
     password = PasswordField(validators=[InputRequired()])
 
-    def validate_login(self, field):
+    def validate_login(self, field): # noqa
         if db.session.query(User).filter_by(
                 login=self.login.data
         ).count() > NULL:

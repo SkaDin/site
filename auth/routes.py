@@ -1,19 +1,23 @@
 import os
 from urllib.parse import urlsplit
 
-from flask import request, redirect, url_for, flash, render_template
+from flask import request, redirect, url_for, flash, render_template, abort
 from flask_login import current_user, login_user, logout_user
 from werkzeug.utils import secure_filename
 
 from app import db
+from app.models import Post
 from auth import bp
 from auth.forms import LoginForm, RegistrationForm
 from auth.models import User
 from config import Config
+from constants import INTERNAL_SERVER_ERROR
 
 
 @bp.route('/register', methods=['GET', 'POST'])
 def register():
+    if not Post.query.all():
+        abort(INTERNAL_SERVER_ERROR)
     if current_user.is_authenticated:
         return redirect(url_for('index.html'))
     form = RegistrationForm()
@@ -22,8 +26,8 @@ def register():
         email = form.email.data
         if (User.query.filter_by(username=username).first() is not None
                 and User.query.filter_by(email=email).first() is not None):
-            flash(f'Проверьте поля:"{username}" и "{email}"'
-                  f' - они могут быть не уникальными!')
+            flash(f'Поля:"{username}" или "{email}"'
+                  f' - занято!')
             return render_template('register.html', form=form)
         avatar = form.avatar.data
         filename = secure_filename(str(avatar))
@@ -50,6 +54,8 @@ def register():
 
 @bp.route('/login', methods=('GET', 'POST'))
 def login():
+    if not Post.query.all():
+        abort(INTERNAL_SERVER_ERROR)
     if current_user.is_authenticated:
         return redirect(url_for('show_index'))
     form = LoginForm()
