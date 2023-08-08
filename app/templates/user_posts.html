@@ -15,9 +15,9 @@
                 Пользователь:
                 {{ selected_user.username }}
                 {% if selected_user.avatar == 'FileStorage__application_octet-stream' %}
-                <img class="avatar" src="{{ url_for('static', filename='img/avatar_default.png') }}" alt="user-avatar" style="width: 40px; height: 40px; margin-right: 0px;" draggable="false">
+                <img class="avatar" src="{{ url_for('static', filename='img/avatar_default.png') }}" alt="user-avatar" style="width: 50px; height: 50px; margin-right: 0px;" draggable="false">
                 {% elif selected_user.avatar %}
-                <img class="avatar" src="{{ url_for('static', filename='people_photo/' + selected_user.avatar) }}" alt="user-avatar" draggable="false" style="width: 40px; height: 40px; border-radius: 50%; border: 3px solid black; margin-right: 0px;">
+                <img class="avatar" src="{{ url_for('static', filename='people_photo/' + selected_user.avatar) }}" alt="user-avatar" draggable="false" style="width: 60px; height: 60px; border-radius: 50%; border: 3px solid black; margin-right: 0px;">
                 {% endif %}
             </h1>
         </div>

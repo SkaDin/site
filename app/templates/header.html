@@ -46,7 +46,7 @@
               {% else %}
               <img class="avatar" src="{{ url_for('static', filename='people_photo/' + current_user.avatar) }}" alt="user-avatar" draggable="false" style="width: 40px; height: 40px; border-radius: 50%; border: 3px solid black; margin-right: 0px;" >
               {% endif %}
-              <a class="username" href="{{ url_for('users_posts', user_id=current_user.id) }}" style="width: 40px; height: 40px; margin-right: 0px; text-decoration: none;">
+              <a href="{{ url_for('users_posts', user_id=current_user.id) }}">
                 {{ current_user.username }}
               </a>
               {% endif %}

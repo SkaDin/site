@@ -4,7 +4,6 @@ import flask_login as login
 from flask_admin import helpers, Admin
 from flask_admin import expose
 from flask_admin.contrib import sqla
-from flask_login import current_user
 from werkzeug.security import generate_password_hash
 
 from admin.forms import RegistrationForm, LoginForm
@@ -24,19 +23,16 @@ class MyModelView(sqla.ModelView):
 class MyAdminIndexView(admin.AdminIndexView):
 
     @expose('/')
-    def index(self):
-        # Запроещаем анониму заходить в админ-панель.
-        if current_user.is_anonymous():
-            abort(FORBIDDEN)
+    def index(self, cls=None):
         if not login.current_user.is_authenticated:
             return redirect(url_for('.login_view'))
         if (login.current_user.is_authenticated and
                 login.current_user.username == Config.ADMIN_NAME):
             return super(MyAdminIndexView, self).index()
         else:
-            return abort(403)
+            abort(FORBIDDEN)
 
-    @expose('/login/', methods=('GET', 'POST'))
+    @expose('/login/', methods=['GET', 'POST'])
     def login_view(self):
         # Обработка входа в систему.
         form = LoginForm(request.form)
@@ -54,7 +50,7 @@ class MyAdminIndexView(admin.AdminIndexView):
         self._template_args['link'] = link
         return super(MyAdminIndexView, self).index()
 
-    @expose('/register/', methods=('GET', 'POST'))
+    @expose('/register/', methods=['GET', 'POST'])
     def register_view(self):
         form = RegistrationForm(request.form)
         if helpers.validate_form_on_submit(form):

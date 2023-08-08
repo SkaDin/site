@@ -10,10 +10,23 @@
     <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='img/fav/favicon-16x16.png') }}" />
     <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}" />
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Edu+SA+Beginner:wght@500&display=swap" rel="stylesheet">
     <title>{% block title %}Что-то на непонятном{% endblock title %}</title>
     <style>
         .centered-image:hover {
         cursor: zoom-in;
+        }
+          a {
+            text-decoration: none;
+            display: inline-block;
+            padding: 0px -10px;
+            letter-spacing: 1px;
+            margin: 0 0px;
+            font-size: 24px;
+            transition: .3s ease-in-out;
+            color: #6A5ACD;
         }
     </style>
 </head>

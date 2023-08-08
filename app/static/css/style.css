@@ -19,7 +19,7 @@
 
 
 body {
-    font-family: Inter,Arial,Lucida Grande,sans-serif;
+    font-family: 'Edu SA Beginner', cursive;
     padding-top: 1rem;
     color: #4b4f54;
     font-size: 1.15vw;
@@ -518,3 +518,15 @@ a{
   width: 32%;
   margin-bottom: 20px;
 }
+
+.thumbs {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.thumbs>div {
+  width: calc(50% - 10px);
+  margin-bottom: 20px;
+}
+
