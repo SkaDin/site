@@ -10,9 +10,9 @@
                 <form method="POST" novalidate enctype="multipart/form-data">
                     {{ form.csrf_token }}
                     {{ form.username(class="form-control form-control-lg py-3 mb-3", placeholder=form.username.label.text) }}
-                    <p>
+                    <p class="text-danger">
                         {% if form.username.errors %}
-                        {% for error in form.email.errors %}
+                        {% for error in form.username.errors %}
                         <span style="color: red">{{ error }}</span>
                         {% endfor %}
                         {% endif %}
@@ -24,14 +24,14 @@
                         {{ error }}
                         {% endfor %}
                         {% endif %}
-                </p>
+                    </p>
                     {{ form.submit(class="button px-5 py-3 btn btn") }}
                 </form>
                 <p class="py-3 mb-3">
                     {% with messages = get_flashed_messages() %}
                     {% if messages %}
-                    {% for message in messages %}
-                    {{ message }}
+                    {% for messag in messages %}
+                    {{ messag }}
                     {% endfor %}
                     {% endif %}
                     {% endwith %}

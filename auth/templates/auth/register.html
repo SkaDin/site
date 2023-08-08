@@ -10,7 +10,7 @@
                 <form method="POST" novalidate enctype="multipart/form-data">
                     {{ form.csrf_token }}
                     {{ form.username(class="form-control form-control-lg py-3 mb-3", placeholder=form.username.label.text) }}
-                    <p>
+                    <p class="text-danger">
                         {% if form.username.errors %}
                         {% for error in form.email.errors %}
                         <span style="color: red">{{ error }}</span>

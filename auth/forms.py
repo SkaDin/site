@@ -2,7 +2,6 @@ from flask_wtf import FlaskForm
 from flask_wtf.file import FileAllowed, FileSize
 from wtforms import (StringField,
                      PasswordField,
-                     BooleanField,
                      SubmitField,
                      FileField)
 from wtforms.validators import DataRequired, Email, EqualTo, ValidationError
@@ -13,20 +12,19 @@ from constants import MAX_CONTENT_LENGTH, IMAGES
 
 class LoginForm(FlaskForm):
     username = StringField(
-        'Логин',
+        'Login',
         validators=[DataRequired(message='Обязательное поле')]
     )
     password = PasswordField(
-        'Пароль',
+        'Password',
         validators=[DataRequired(message='Обязательное поле')]
     )
-    remember_me = BooleanField('Запомнить меня')
-    submit = SubmitField('Войти')
+    submit = SubmitField('login')
 
 
 class RegistrationForm(FlaskForm):
     username = StringField(
-        'Логин',
+        'Login',
         validators=[DataRequired(message='Обязательное поле')]
     )
     email = StringField(
@@ -37,11 +35,11 @@ class RegistrationForm(FlaskForm):
         ]
     )
     password = PasswordField(
-        'Пароль',
+        'Password',
         validators=[DataRequired(message='Обязательное поле')]
     )
     password2 = PasswordField(
-        'Подтверждение пароля',
+        'Password confirmation',
         validators=[
             DataRequired(message='Обязательное поле'),
             EqualTo('password')
@@ -52,12 +50,13 @@ class RegistrationForm(FlaskForm):
         validators=[
             FileAllowed(
                 IMAGES,
-                message='Только фотографии формата(jpg jpe jpeg png gif svg bmp)'
+                message='Только фотографии формата:'
+                        ' jpg, jpe, jpeg, png, gif, svg, bmp'
             ),
             FileSize(MAX_CONTENT_LENGTH)
         ]
     )
-    submit = SubmitField('Зарегистрироваться')
+    submit = SubmitField('Register')
 
     def validate_username(self, username): # noqa
         user = User.query.filter_by(username=username.data).first()
