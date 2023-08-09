@@ -22,9 +22,7 @@ from utils import getting_a_photo
 from constants import ONE, TWELVE, INTERNAL_SERVER_ERROR
 
 
-# Команда добавлена сюда а не в другую директорию
-# по причине того,
-# что Flask не видит команду из другой дирректории.
+# Команда добавлена сюда а не в другую директорию.
 @app.cli.command('load_test_data')
 def load_test_data():
     """

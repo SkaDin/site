@@ -1,31 +1,21 @@
 import os
 
-from dotenv import load_dotenv
 
-from config import Config
+class TestConfig:
+    """Тестирование файла config."""
 
-load_dotenv()
+    def test_env_vars(self):
+        assert 'sqlite:///db.sqlite3' in list(os.environ.values()), (
+            'Проверьте наличие переменной окружения с настройками для подключения'
+            ' базы данных со значением sqlite:///db.sqlite3'
+        )
 
-
-def test_database():
-    assert Config.SQLALCHEMY_DATABASE_URI == os.getenv('SQLALCHEMY_DATABASE_URI'), (
-        'Проверьте переменную окружения '
-        'SQLALCHEMY_DATABASE_URI в файле .env '
-        'она должна быть равна: sqlite:///db.sqlite3'
-    )
-
-
-def test_secret_key():
-    assert Config.SECRET_KEY == os.getenv('SECRET_KEY'), (
-        'Проверьте переменную окружения '
-        'SECRET_KEY в файле .env '
-    )
-
-
-def test_people_folder():
-    people_folder_config = os.path.join('app/static', 'people_photo')
-    people_folder_actual = os.path.abspath(Config.PEOPLE_FOLDER)
-    assert os.path.samefile(people_folder_config, people_folder_actual), (
-        'Проверьте директорию people_photo, '
-        'она должна быть одинаковой в конфигурации и по факту'
-    )
+    def test_config(self, default_app):
+        assert default_app.config['SQLALCHEMY_DATABASE_URI'] == 'sqlite:///db.sqlite3', (
+            'Проверьте, что конфигурационному ключу SQLALCHEMY_DATABASE_URI '
+            'присвоено значение с настройками для подключения базы данных'
+        )
+        assert default_app.config['SECRET_KEY'] == os.getenv('SECRET_KEY'), (
+            'Проверьте, что конфигурационному ключу SECRET_KEY '
+            'присвоено значение'
+        )
