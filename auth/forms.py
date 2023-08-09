@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileAllowed, FileSize
-from wtforms import (StringField,
+from wtforms import (BooleanField,
+                     StringField,
                      PasswordField,
                      SubmitField,
                      FileField)
@@ -19,6 +20,7 @@ class LoginForm(FlaskForm):
         'Password',
         validators=[DataRequired(message='Обязательное поле')]
     )
+    remember_me = BooleanField("Remember Me")
     submit = SubmitField('login')
 
 
