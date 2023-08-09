@@ -34,30 +34,13 @@ def test_config(tmp_path):
 
 
 @pytest.fixture
-def _app(tmp_path):
-    db_path = tmp_path / 'test_db.sqlite3'
-    db_uri = 'sqlite:///' + str(db_path)
-    app.config.update({
-        'TESTING': True,
-        'SQLALCHEMY_DATABASE_URI': db_uri,
-        'WTF_CSRF_ENABLE': False,
-    })
-    with app.app_context():
-        db.create_all()
-    yield app
-    db.drop_all()
-    db.session.close()
-    db_path.unlink()
-
-
-@pytest.fixture
 def default_app():
     with app.app_context():
         yield app
 
 
 @pytest.fixture
-def _app(tmp_path):
+def _app(tmp_path): # noqa
     db_path = tmp_path / 'test_db.sqlite3'
     db_uri = 'sqlite:///' + str(db_path)
     app.config.update({
