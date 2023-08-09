@@ -20,3 +20,12 @@ def test_secret_key():
         'Проверьте переменную окружения '
         'SECRET_KEY в файле .env '
     )
+
+
+def test_people_folder():
+    people_folder_config = os.path.join('app/static', 'people_photo')
+    people_folder_actual = os.path.abspath(Config.PEOPLE_FOLDER)
+    assert os.path.samefile(people_folder_config, people_folder_actual), (
+        'Проверьте директорию people_photo, '
+        'она должна быть одинаковой в конфигурации и по факту'
+    )
