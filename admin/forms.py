@@ -13,12 +13,12 @@ class LoginForm(Form):
     login = StringField(validators=[InputRequired()])
     password = PasswordField(validators=[InputRequired()])
 
-    def validate_login(self, field): # noqa
+    def validate_login(self, field):  # noqa
         user = self.get_user()
         if user is None:
-            raise ValidationError('Invalid user.')
+            raise ValidationError("Invalid user.")
         if not check_password_hash(user.password, self.password.data):
-            raise ValidationError('Invalid password')
+            raise ValidationError("Invalid password")
 
     def get_user(self):
         return db.sessiom.query(User).filter_by(login=self.login.data).first()
@@ -29,11 +29,12 @@ class RegistrationForm(Form):
     email = StringField()
     password = PasswordField(validators=[InputRequired()])
 
-    def validate_login(self, field): # noqa
-        if db.session.query(User).filter_by(
-                login=self.login.data
-        ).count() > NULL:
-            raise ValidationError('Duplicate username')
+    def validate_login(self, field):  # noqa
+        if (
+            db.session.query(User).filter_by(login=self.login.data).count()
+            > NULL
+        ):
+            raise ValidationError("Duplicate username")
 
 
 def init_login():

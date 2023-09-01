@@ -1,11 +1,11 @@
 from flask import Blueprint
 
 bp = Blueprint(
-    'auth',
+    "auth",
     __name__,
-    url_prefix='/auth',
-    static_folder='static',
-    template_folder='templates'
+    url_prefix="/auth",
+    static_folder="static",
+    template_folder="templates",
 )
 
 from auth import routes, models, forms

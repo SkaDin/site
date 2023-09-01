@@ -2,11 +2,11 @@ from flask import Blueprint
 
 
 bp = Blueprint(
-    'admin_page',
+    "admin_page",
     __name__,
-    url_prefix='/admin',
-    static_folder='static',
-    template_folder='templates'
+    url_prefix="/admin",
+    static_folder="static",
+    template_folder="templates",
 )
 
 

@@ -8,21 +8,22 @@ from constants import IMAGES
 
 class PostForm(FlaskForm):
     """Форма для создания поста."""
+
     title = StringField(
-        'Введите название тату(17 символов)',
-        validators=[DataRequired(message='Поле обязательное!'),
-                    Length(1, 17)]
+        "Введите название тату(17 символов)",
+        validators=[
+            DataRequired(message="Поле обязательное!"),
+            Length(1, 17),
+        ],
     )
     text = TextAreaField(
-        'Всё что хочется рассказать',
-        validators=[DataRequired(message='Поле обязательное!'),
-                    Length(1, 128)]
+        "Всё что хочется рассказать",
+        validators=[
+            DataRequired(message="Поле обязательное!"),
+            Length(1, 128),
+        ],
     )
     image = FileField(
-        'Фото',
-        validators=[FileAllowed(
-            IMAGES,
-            'Только фото!'
-        )]
+        "Фото", validators=[FileAllowed(IMAGES, "Только фото!")]
     )
-    submit = SubmitField('Отправить')
+    submit = SubmitField("Отправить")

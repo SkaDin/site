@@ -1,0 +1,31 @@
+[tool.poetry]
+name = "site"
+version = "0.1.0"
+description = ""
+authors = ["Your Name <you@example.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+flask = "^2.3.3"
+jinja2 = "^3.1.2"
+alembic = "^1.12.0"
+sqlalchemy = "^2.0.20"
+flask-wtf = "^1.1.1"
+flask-sqlalchemy = "^3.0.5"
+flask-login = "^0.6.2"
+flask-admin = "^1.6.1"
+python-dotenv = "^1.0.0"
+flask-bootstrap = "^3.3.7.1"
+flask-migrate = "^4.0.4"
+email-validator = "^2.0.0.post2"
+black = "^23.7.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+
+[tool.black]
+line-length = 78

@@ -1,8 +1,5 @@
 from flask import Blueprint
 
-bp = Blueprint(
-    'errors',
-    __name__
-)
+bp = Blueprint("errors", __name__)
 
-from errors import error_handlers # noqa
+from errors import error_handlers  # noqa
