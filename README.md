@@ -31,7 +31,7 @@ git@github.com:SkaDin/site.git
 cd site
 ```
 ### 2. Все зависимости находятся в файле pyproject.toml
-```
+
 ### 3. Пример .env-файла который должен быть создан в корне проекта:
 ```
 DATABASE_URI=sqlite:///db.sqlite3
